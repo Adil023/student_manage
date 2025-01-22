@@ -1,10 +1,6 @@
 package org.example.student_manage.dto;
 
-import jakarta.persistence.Id;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class StudentDTOUI {
     Long id;
     String firstName;

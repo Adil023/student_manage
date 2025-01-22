@@ -7,6 +7,7 @@ import org.example.student_manage.exception.StudentNotFoundException;
 import org.example.student_manage.mapper.StudentMapper;
 import org.example.student_manage.repository.StudentRepository;
 import org.example.student_manage.service.impl.StudentServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,14 +35,16 @@ public class StudentService implements StudentServiceImpl {
     }
 
     @Override
-    public ResponseEntity<Student> getStudentsById(Long studentId) {
+    public ResponseEntity<StudentDTO> getStudentsById(Long studentId) {
        Student studentById = studentRepository.findById(studentId)
                .orElseThrow(()->new StudentNotFoundException("Student not found"));
 
-       return new ResponseEntity<>(studentById,HttpStatus.OK);
+        StudentDTO studentDTO = StudentMapper.toStudentDTO(studentById);
+       return new ResponseEntity<>(studentDTO,HttpStatus.OK);
     }
 
     @Override
+    @Transactional
     public ResponseEntity<StudentDTO> createStudent(StudentDTOUI studentDtoUi) {
         Student savedStudent = StudentMapper.toEntity(studentDtoUi);
         Student newStudent =  studentRepository.save(savedStudent);
@@ -50,13 +53,11 @@ public class StudentService implements StudentServiceImpl {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<StudentDTO> updateStudent(Long studentId, StudentDTOUI student) {
        Student entityStudent =  studentRepository.findById(studentId)
                .orElseThrow(() ->new StudentNotFoundException("Student not found with "+studentId));
-            entityStudent.setFirstName(student.getFirstName());
-            entityStudent.setLastName(student.getLastName());
-            entityStudent.setPassword(student.getPassword());
-            entityStudent.setEmail(student.getEmail());
+            BeanUtils.copyProperties(student, entityStudent);
             Student updatedStudent = studentRepository.save(entityStudent);
             StudentDTO studentDTO =  StudentMapper.toStudentDTO(updatedStudent);
             return new ResponseEntity<>(studentDTO,HttpStatus.OK);
@@ -65,6 +66,7 @@ public class StudentService implements StudentServiceImpl {
 
 
     @Override
+    @Transactional
     public void deleteStudent(Long studentId) {
         studentRepository.deleteById(studentId);
     }

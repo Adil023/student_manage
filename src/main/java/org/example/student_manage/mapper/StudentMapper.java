@@ -8,6 +8,7 @@ public class StudentMapper {
     public static StudentDTO toStudentDTO(Student student) {
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setFirstName(student.getFirstName());
+        studentDTO.setFirstName(student.getFirstName());
         studentDTO.setLastName(student.getLastName());
         return studentDTO;
     }

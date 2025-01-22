@@ -11,7 +11,7 @@ public interface StudentServiceImpl {
 
     ResponseEntity<List<StudentDTO>> getAllStudents();
 
-    ResponseEntity<Student> getStudentsById(Long studentId);
+    ResponseEntity<StudentDTO> getStudentsById(Long studentId);
 
     ResponseEntity<StudentDTO> createStudent(StudentDTOUI studentdtoui);
 

@@ -1,10 +1,5 @@
 package org.example.student_manage.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-
 public class StudentDTO {
    String firstName;
    String lastName;

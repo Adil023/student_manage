@@ -46,10 +46,6 @@ public class Student {
         return id;
     }
 
-    public Student setId(Long id) {
-        this.id = id;
-        return this;
-    }
 
     public String getFirstName() {
         return firstName;
