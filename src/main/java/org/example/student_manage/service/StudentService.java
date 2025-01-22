@@ -1,7 +1,9 @@
 package org.example.student_manage.service;
 import jakarta.transaction.Transactional;
+import org.example.student_manage.dto.StudentDTO;
 import org.example.student_manage.entity.Student;
 import org.example.student_manage.exception.StudentNotFoundException;
+import org.example.student_manage.mapper.StudentMapper;
 import org.example.student_manage.repository.StudentRepository;
 import org.example.student_manage.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,12 @@ public class StudentService implements StudentServiceImpl {
     }
 
 
-    public ResponseEntity<List<Student>> getAllStudents() {
-        List<Student> allStudents = studentRepository.findAll();
-        return new ResponseEntity<>(allStudents, HttpStatus.OK);
+    public ResponseEntity<List<StudentDTO>> getAllStudents() {
+        List<StudentDTO> allStudents = studentRepository.findAll()
+                .stream()
+                .map(StudentMapper::toStudentDTO)
+                .toList();
+       return new ResponseEntity<>(allStudents, HttpStatus.OK);
     }
 
     public ResponseEntity<Student> getStudentsById(Long studentId) {

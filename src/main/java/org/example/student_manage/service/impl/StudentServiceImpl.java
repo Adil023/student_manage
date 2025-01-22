@@ -1,5 +1,6 @@
 package org.example.student_manage.service.impl;
 
+import org.example.student_manage.dto.StudentDTO;
 import org.example.student_manage.entity.Student;
 import org.springframework.http.ResponseEntity;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface StudentServiceImpl {
 
-    ResponseEntity<List<Student>> getAllStudents();
+    ResponseEntity<List<StudentDTO>> getAllStudents();
 
     ResponseEntity<Student> getStudentsById(Long studentId);
 

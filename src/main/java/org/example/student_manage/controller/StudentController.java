@@ -1,6 +1,7 @@
 package org.example.student_manage.controller;
 
 import jakarta.validation.Valid;
+import org.example.student_manage.dto.StudentDTO;
 import org.example.student_manage.entity.Student;
 import org.example.student_manage.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class StudentController {
     }
 
     @GetMapping("students")
-    public ResponseEntity<List<Student>> getAllStudents() {
+    public ResponseEntity<List<StudentDTO>> getAllStudents() {
        return  studentService.getAllStudents();
     }
 
