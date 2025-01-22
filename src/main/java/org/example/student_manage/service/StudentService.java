@@ -1,6 +1,7 @@
 package org.example.student_manage.service;
 import jakarta.transaction.Transactional;
 import org.example.student_manage.dto.StudentDTO;
+import org.example.student_manage.dto.StudentDTOUI;
 import org.example.student_manage.entity.Student;
 import org.example.student_manage.exception.StudentNotFoundException;
 import org.example.student_manage.mapper.StudentMapper;
@@ -23,6 +24,7 @@ public class StudentService implements StudentServiceImpl {
     }
 
 
+    @Override
     public ResponseEntity<List<StudentDTO>> getAllStudents() {
         List<StudentDTO> allStudents = studentRepository.findAll()
                 .stream()
@@ -31,6 +33,7 @@ public class StudentService implements StudentServiceImpl {
        return new ResponseEntity<>(allStudents, HttpStatus.OK);
     }
 
+    @Override
     public ResponseEntity<Student> getStudentsById(Long studentId) {
        Student studentById = studentRepository.findById(studentId)
                .orElseThrow(()->new StudentNotFoundException("Student not found"));
@@ -38,24 +41,30 @@ public class StudentService implements StudentServiceImpl {
        return new ResponseEntity<>(studentById,HttpStatus.OK);
     }
 
-    public ResponseEntity<Student> createStudent(Student student) {
-        Student newStudent =  studentRepository.save(student);
-        return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
+    @Override
+    public ResponseEntity<StudentDTO> createStudent(StudentDTOUI studentDtoUi) {
+        Student savedStudent = StudentMapper.toEntity(studentDtoUi);
+        Student newStudent =  studentRepository.save(savedStudent);
+        StudentDTO studentDTO =StudentMapper.toStudentDTO(newStudent);
+        return new ResponseEntity<>(studentDTO,HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Student> updateStudent(Long studentId, Student student) {
-        Optional<Student> updatedStudent = studentRepository.findById(studentId);
-        if(updatedStudent.isPresent()) {
-            student.setFirstName(updatedStudent.get().getFirstName());
-            student.setLastName(updatedStudent.get().getLastName());
-            student.setPassword(updatedStudent.get().getPassword());
-            student.setEmail(updatedStudent.get().getEmail());
-            return new ResponseEntity<>(studentRepository.save(student), HttpStatus.OK);
-        }throw new StudentNotFoundException("Student has not found");
+    @Override
+    public ResponseEntity<StudentDTO> updateStudent(Long studentId, StudentDTOUI student) {
+       Student entityStudent =  studentRepository.findById(studentId)
+               .orElseThrow(() ->new StudentNotFoundException("Student not found with "+studentId));
+            entityStudent.setFirstName(student.getFirstName());
+            entityStudent.setLastName(student.getLastName());
+            entityStudent.setPassword(student.getPassword());
+            entityStudent.setEmail(student.getEmail());
+            Student updatedStudent = studentRepository.save(entityStudent);
+            StudentDTO studentDTO =  StudentMapper.toStudentDTO(updatedStudent);
+            return new ResponseEntity<>(studentDTO,HttpStatus.OK);
 
     }
 
 
+    @Override
     public void deleteStudent(Long studentId) {
         studentRepository.deleteById(studentId);
     }

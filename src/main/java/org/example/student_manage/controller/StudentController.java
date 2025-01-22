@@ -2,6 +2,7 @@ package org.example.student_manage.controller;
 
 import jakarta.validation.Valid;
 import org.example.student_manage.dto.StudentDTO;
+import org.example.student_manage.dto.StudentDTOUI;
 import org.example.student_manage.entity.Student;
 import org.example.student_manage.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,12 @@ public class StudentController {
     }
 
     @PostMapping("new")
-    public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student){
+    public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTOUI student){
         return studentService.createStudent(student);
     }
 
     @PutMapping("edit/{studentId}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long studentId, @RequestBody Student student){
+    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long studentId, @RequestBody StudentDTOUI student){
         return studentService.updateStudent(studentId,student);
     }
 

@@ -1,6 +1,7 @@
 package org.example.student_manage.mapper;
 
 import org.example.student_manage.dto.StudentDTO;
+import org.example.student_manage.dto.StudentDTOUI;
 import org.example.student_manage.entity.Student;
 
 public class StudentMapper {
@@ -12,10 +13,12 @@ public class StudentMapper {
     }
 
 
-    public static Student toEntity(StudentDTO studentDTO) {
+    public static Student toEntity(StudentDTOUI studentDTOUI) {
         Student student = new Student();
-        student.setFirstName(studentDTO.getFirstName());
-        student.setLastName(studentDTO.getLastName());
+        student.setFirstName(studentDTOUI.getFirstName());
+        student.setLastName(studentDTOUI.getLastName());
+        student.setPassword(studentDTOUI.getPassword());
+        student.setEmail(studentDTOUI.getEmail());
         return student;
     }
 }
