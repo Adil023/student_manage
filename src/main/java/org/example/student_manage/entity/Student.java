@@ -10,6 +10,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.action.internal.OrphanRemovalAction;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="students")
 @AllArgsConstructor
@@ -83,4 +88,35 @@ public class Student {
         this.email = email;
         return this;
     }
+
+
+    @ManyToMany
+    @JoinTable(
+            name="student_course",
+            joinColumns = @JoinColumn(name="student_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="course_id",referencedColumnName = "id")
+
+    )
+    List<Course> courses = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(
+            name="student_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(
+                    name="student_id_fk"
+            )
+    )//owning side
+    private Adress adress;
+
+
+    @OneToMany(
+            mappedBy = "books",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL
+    )
+
+    List<Book> books = new ArrayList<>();
+
+
 }
