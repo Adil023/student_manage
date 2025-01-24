@@ -1,5 +1,6 @@
 package org.example.student_manage.mapper;
 
+import org.assertj.core.api.Assertions;
 import org.example.student_manage.dto.StudentDTO;
 import org.example.student_manage.dto.StudentDTOUI;
 import org.example.student_manage.entity.Student;
@@ -12,13 +13,12 @@ class StudentMapperTest {
 
     @Test
     public void toTeststudentDTO(){
-        // given
+
         Student student = new Student();
         student.setFirstName("Adil");
         student.setLastName("Gadirov");
-        //when
+
         StudentDTO studentDTO = StudentMapper.toStudentDTO(student);
-        //assert or actual
 
         assertNotNull(studentDTO);
         assertEquals("Adil", studentDTO.getFirstName());
@@ -27,21 +27,27 @@ class StudentMapperTest {
 
     @Test
     public void testToEntity(){
-        // given
+
         StudentDTOUI studentDTOUI = new StudentDTOUI();
+
         studentDTOUI.setFirstName("Adil");
         studentDTOUI.setLastName("Gadirov");
         studentDTOUI.setPassword("pasdos");
         studentDTOUI.setEmail("adil.gadirov@gmail.com");
-        // when
-        Student student = StudentMapper.toEntity(studentDTOUI);
 
-        // actual or assertion
-        assertNotNull(student);
-        assertEquals("Adil", student.getFirstName());
-        assertEquals("Gadirov", student.getLastName());
-        assertEquals("pasdos", student.getPassword());
-        assertEquals("adil.gadirov@gmail.com", student.getEmail());
+        Student expected = new Student();
+
+        expected.setFirstName("Adil");
+        expected.setLastName("Gadirov");
+        expected.setPassword("pasdos");
+        expected.setEmail("adil.gadirov@gmail.com");
+
+
+        Student actual = StudentMapper.toEntity(studentDTOUI);
+
+        Assertions.assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+
+
     }
 
 }
