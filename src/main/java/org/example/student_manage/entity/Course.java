@@ -23,7 +23,7 @@ public class Course {
     String department;
 
     @ManyToMany(
-            mappedBy = "students"
+            mappedBy = "courses"
     )
 
     List<Student> students = new ArrayList<>();

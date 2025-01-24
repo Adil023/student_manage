@@ -111,7 +111,7 @@ public class Student {
 
 
     @OneToMany(
-            mappedBy = "books",
+            mappedBy = "student",
             orphanRemoval = true,
             cascade = CascadeType.ALL
     )

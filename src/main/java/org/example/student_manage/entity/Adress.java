@@ -27,7 +27,7 @@ public class Adress {
     String street;
 
     @OneToOne(
-            mappedBy = "student",
+            mappedBy = "adress",
             orphanRemoval = true,
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
     )
