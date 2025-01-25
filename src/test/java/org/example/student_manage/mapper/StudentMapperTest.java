@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class StudentMapperTest {
 
+    private StudentMapper studentMapper;
+
     @Test
     public void toTeststudentDTO(){
 
@@ -18,7 +20,7 @@ class StudentMapperTest {
         student.setFirstName("Adil");
         student.setLastName("Gadirov");
 
-        StudentDTO studentDTO = StudentMapper.toStudentDTO(student);
+        StudentDTO studentDTO = studentMapper.toStudentDTO(student);
 
         assertNotNull(studentDTO);
         assertEquals("Adil", studentDTO.getFirstName());
@@ -43,11 +45,9 @@ class StudentMapperTest {
         expected.setEmail("adil.gadirov@gmail.com");
 
 
-        Student actual = StudentMapper.toEntity(studentDTOUI);
+        Student actual = studentMapper.toEntity(studentDTOUI);
 
         Assertions.assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
-
-
     }
 
 }

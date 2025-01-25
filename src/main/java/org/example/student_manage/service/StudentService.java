@@ -18,56 +18,61 @@ import java.util.Optional;
 
 @Service
 public class StudentService implements StudentServiceImpl {
-    private final StudentRepository studentRepository;
+
+
+    private StudentMapper studentMapper;
+
+    private  StudentRepository studentRepository;
     @Autowired
-    public StudentService(StudentRepository studentRepository){
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
 
-    @Override
-    public ResponseEntity<List<StudentDTO>> getAllStudents() {
-        List<StudentDTO> allStudents = studentRepository.findAll()
-                .stream()
-                .map(StudentMapper::toStudentDTO)
-                .toList();
-       return new ResponseEntity<>(allStudents, HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<StudentDTO> getStudentsById(Long studentId) {
-       Student studentById = studentRepository.findById(studentId)
-               .orElseThrow(()->new StudentNotFoundException("Student not found"));
-
-        StudentDTO studentDTO = StudentMapper.toStudentDTO(studentById);
-       return new ResponseEntity<>(studentDTO,HttpStatus.OK);
-    }
+//    @Override
+//    public ResponseEntity<List<StudentDTO>> getAllStudents() {
+//        List<StudentDTO> allStudents = studentRepository.findAll()
+//                .stream()
+//                .map(StudentMapper::toStudentDTO)
+//                .toList();
+//       return new ResponseEntity<>(allStudents, HttpStatus.OK);
+//    }
+//
+//    @Override
+//    public ResponseEntity<StudentDTO> getStudentsById(Long studentId) {
+//       Student studentById = studentRepository.findById(studentId)
+//               .orElseThrow(()->new StudentNotFoundException("Student not found"));
+//
+//        StudentDTO studentDTO = StudentMapper.toStudentDTO(studentById);
+//       return new ResponseEntity<>(studentDTO,HttpStatus.OK);
+//    }
 
     @Override
     @Transactional
     public ResponseEntity<StudentDTO> createStudent(StudentDTOUI studentDtoUi) {
-        Student savedStudent = StudentMapper.toEntity(studentDtoUi);
+        Student savedStudent = studentMapper.toEntity(studentDtoUi);
         Student newStudent =  studentRepository.save(savedStudent);
-        StudentDTO studentDTO =StudentMapper.toStudentDTO(newStudent);
+        StudentDTO studentDTO =studentMapper.toStudentDTO(newStudent);
         return new ResponseEntity<>(studentDTO,HttpStatus.CREATED);
     }
 
-    @Override
-    @Transactional
-    public ResponseEntity<StudentDTO> updateStudent(Long studentId, StudentDTOUI student) {
-       Student entityStudent =  studentRepository.findById(studentId)
-               .orElseThrow(() ->new StudentNotFoundException("Student not found with "+studentId));
-            BeanUtils.copyProperties(student, entityStudent);
-            Student updatedStudent = studentRepository.save(entityStudent);
-            StudentDTO studentDTO =  StudentMapper.toStudentDTO(updatedStudent);
-            return new ResponseEntity<>(studentDTO,HttpStatus.OK);
-
-    }
-
-
-    @Override
-    @Transactional
-    public void deleteStudent(Long studentId) {
-        studentRepository.deleteById(studentId);
-    }
+//    @Override
+//    @Transactional
+//    public ResponseEntity<StudentDTO> updateStudent(Long studentId, StudentDTOUI student) {
+//       Student entityStudent =  studentRepository.findById(studentId)
+//               .orElseThrow(() ->new StudentNotFoundException("Student not found with "+studentId));
+//            BeanUtils.copyProperties(student, entityStudent);
+//            Student updatedStudent = studentRepository.save(entityStudent);
+//            StudentDTO studentDTO =  StudentMapper.toStudentDTO(updatedStudent);
+//            return new ResponseEntity<>(studentDTO,HttpStatus.OK);
+//
+//    }
+//
+//
+//    @Override
+//    @Transactional
+//    public void deleteStudent(Long studentId) {
+//        studentRepository.deleteById(studentId);
+//    }
 }

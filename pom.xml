@@ -14,7 +14,7 @@
     <name>student_manage</name>
     <description>student_manage</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>17</java.version> <!-- Java versiyasını 11-ə dəyişdirdik -->
     </properties>
     <dependencies>
         <dependency>
@@ -54,6 +54,15 @@
             <artifactId>lombok</artifactId>
             <scope>annotationProcessor</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -68,6 +77,8 @@
                             <artifactId>lombok</artifactId>
                         </path>
                     </annotationProcessorPaths>
+                    <source>16</source> <!-- Java versiyasını 11-ə uyğunlaşdırdıq -->
+                    <target>16</target> <!-- Java versiyasını 11-ə uyğunlaşdırdıq -->
                 </configuration>
             </plugin>
             <plugin>

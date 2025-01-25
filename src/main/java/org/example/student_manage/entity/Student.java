@@ -87,6 +87,16 @@ public class Student {
         return this;
     }
 
+    public Student(Long id,String firstName, String lastName, String password, String email) {
+        this.firstName = firstName;
+        this.id = id;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+    }
+
+    public Student() {
+    }
 
     @ManyToMany
     @JoinTable(
