@@ -168,5 +168,48 @@ class StudentServiceTest {
         verify(studentRepository,times(1)).findById(1L);
         verify(studentMapper,times(1)).toStudentDTO(student);
     }
+
+    @Test
+    public void should_delete_student_successfully() {
+
+        studentRepository.deleteById(1L);
+        verify(studentRepository,times(1)).deleteById(1L);
+
+
+
+
+    }
+
+    @Test
+    public void should_update_student_successfully() {
+        Student student = new Student(1L,
+                "Adil",
+                "Gadirov",
+                "adil@gmail.com",
+                "adil12345");
+
+        StudentDTO studentDTO = new StudentDTO(
+                "Adil",
+                "Gadirov"
+        );
+
+        when(studentRepository.findById(1L))
+                .thenReturn(Optional.of(student));
+
+        when(studentRepository.save(student))
+                .thenReturn(student);
+
+        when(studentMapper.toStudentDTO(student))
+                .thenReturn(studentDTO);
+
+        ResponseEntity<StudentDTO> response=  studentService.getStudentsById(1L);
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals("Adil",response.getBody().getFirstName());
+        verify(studentRepository,times(1)).findById(1L);
+        verify(studentRepository,times(1)).save(student);
+        verify(studentMapper,times(1)).toStudentDTO(student);
+    }
 }
 
