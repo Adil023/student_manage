@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface StudentServiceImpl {
 
-//    ResponseEntity<List<StudentDTO>> getAllStudents();
+    ResponseEntity<List<StudentDTO>> getAllStudents();
 //
 //    ResponseEntity<StudentDTO> getStudentsById(Long studentId);
 

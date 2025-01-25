@@ -30,15 +30,15 @@ public class StudentService implements StudentServiceImpl {
     }
 
 
-//    @Override
-//    public ResponseEntity<List<StudentDTO>> getAllStudents() {
-//        List<StudentDTO> allStudents = studentRepository.findAll()
-//                .stream()
-//                .map(StudentMapper::toStudentDTO)
-//                .toList();
-//       return new ResponseEntity<>(allStudents, HttpStatus.OK);
-//    }
-//
+    @Override
+    public ResponseEntity<List<StudentDTO>> getAllStudents() {
+        List<StudentDTO> allStudents = studentRepository.findAll()
+                .stream()
+                .map(studentMapper::toStudentDTO)
+                .toList();
+       return new ResponseEntity<>(allStudents, HttpStatus.OK);
+    }
+
 //    @Override
 //    public ResponseEntity<StudentDTO> getStudentsById(Long studentId) {
 //       Student studentById = studentRepository.findById(studentId)

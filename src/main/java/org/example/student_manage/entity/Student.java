@@ -15,7 +15,6 @@ import java.util.List;
 @Entity
 @Table(name="students")
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @ToString
 @FieldDefaults(level= AccessLevel.PRIVATE)
