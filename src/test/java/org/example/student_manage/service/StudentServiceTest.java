@@ -128,5 +128,45 @@ class StudentServiceTest {
         verify(studentMapper,times(1)).toStudentDTO(student2);
 
     }
+
+    @Test
+    public void should_find_student_by_id_successfully() {
+        StudentDTOUI studentDTOUI = new StudentDTOUI(
+                1L,
+                "Adil",
+                "Gadirov",
+                "pasdos",
+                "adil@gmail.com"
+        );
+
+        Student student = new Student(
+                1L,
+                "Adil",
+                "Gadirov",
+                "pasdos",
+                "adil@gmail.com"
+        );
+
+
+
+        StudentDTO studentDTO = new StudentDTO(
+                "Adil",
+                "Gadirov"
+        );
+
+        when(studentRepository.findById(1L))
+                .thenReturn(Optional.of(student));
+
+        when(studentMapper.toStudentDTO(student))
+                .thenReturn(studentDTO);
+
+         ResponseEntity<StudentDTO> response =   studentService.getStudentsById(1L);
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals("Adil",response.getBody().getFirstName());
+        verify(studentRepository,times(1)).findById(1L);
+        verify(studentMapper,times(1)).toStudentDTO(student);
+    }
 }
 
