@@ -39,14 +39,17 @@ public class StudentService implements StudentServiceImpl {
        return new ResponseEntity<>(allStudents, HttpStatus.OK);
     }
 
-//    @Override
-//    public ResponseEntity<StudentDTO> getStudentsById(Long studentId) {
-//       Student studentById = studentRepository.findById(studentId)
-//               .orElseThrow(()->new StudentNotFoundException("Student not found"));
-//
-//        StudentDTO studentDTO = StudentMapper.toStudentDTO(studentById);
-//       return new ResponseEntity<>(studentDTO,HttpStatus.OK);
-//    }
+
+
+
+    @Override
+    public ResponseEntity<StudentDTO> getStudentsById(Long studentId) {
+       Student studentById = studentRepository.findById(studentId)
+               .orElseThrow(()->new StudentNotFoundException("Student not found"));
+
+        StudentDTO studentDTO = studentMapper.toStudentDTO(studentById);
+       return new ResponseEntity<>(studentDTO,HttpStatus.OK);
+    }
 
     @Override
     @Transactional
@@ -57,22 +60,22 @@ public class StudentService implements StudentServiceImpl {
         return new ResponseEntity<>(studentDTO,HttpStatus.CREATED);
     }
 
-//    @Override
-//    @Transactional
-//    public ResponseEntity<StudentDTO> updateStudent(Long studentId, StudentDTOUI student) {
-//       Student entityStudent =  studentRepository.findById(studentId)
-//               .orElseThrow(() ->new StudentNotFoundException("Student not found with "+studentId));
-//            BeanUtils.copyProperties(student, entityStudent);
-//            Student updatedStudent = studentRepository.save(entityStudent);
-//            StudentDTO studentDTO =  StudentMapper.toStudentDTO(updatedStudent);
-//            return new ResponseEntity<>(studentDTO,HttpStatus.OK);
-//
-//    }
-//
-//
-//    @Override
-//    @Transactional
-//    public void deleteStudent(Long studentId) {
-//        studentRepository.deleteById(studentId);
-//    }
+    @Override
+    @Transactional
+    public ResponseEntity<StudentDTO> updateStudent(Long studentId, StudentDTOUI student) {
+       Student entityStudent =  studentRepository.findById(studentId)
+               .orElseThrow(() ->new StudentNotFoundException("Student not found with "+studentId));
+            BeanUtils.copyProperties(student, entityStudent);
+            Student updatedStudent = studentRepository.save(entityStudent);
+            StudentDTO studentDTO =  studentMapper.toStudentDTO(updatedStudent);
+            return new ResponseEntity<>(studentDTO,HttpStatus.OK);
+
+    }
+
+
+    @Override
+    @Transactional
+    public void deleteStudent(Long studentId) {
+        studentRepository.deleteById(studentId);
+    }
 }

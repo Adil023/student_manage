@@ -10,12 +10,11 @@ import java.util.List;
 public interface StudentServiceImpl {
 
     ResponseEntity<List<StudentDTO>> getAllStudents();
-//
-//    ResponseEntity<StudentDTO> getStudentsById(Long studentId);
+
+    ResponseEntity<StudentDTO> getStudentsById(Long studentId);
 
     ResponseEntity<StudentDTO> createStudent(StudentDTOUI studentdtoui);
 
-//    ResponseEntity<StudentDTO> updateStudent(Long studentId, StudentDTOUI student);
-//
-//    void deleteStudent(Long studentId);
+    ResponseEntity<StudentDTO> updateStudent(Long studentId, StudentDTOUI student);
+    void deleteStudent(Long studentId);
 }
