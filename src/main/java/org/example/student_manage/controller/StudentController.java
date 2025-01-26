@@ -21,29 +21,29 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-//    @GetMapping("students")
-//    public ResponseEntity<List<StudentDTO>> getAllStudents() {
-//       return  studentService.getAllStudents();
-//    }
-//
-//    @GetMapping("students/{studentId}")
-//    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId){
-//        return studentService.getStudentsById(studentId);
-//    }
+    @GetMapping("students")
+    public ResponseEntity<List<StudentDTO>> getAllStudents() {
+       return  studentService.getAllStudents();
+    }
+
+    @GetMapping("students/{studentId}")
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId){
+        return studentService.getStudentsById(studentId);
+    }
 
     @PostMapping("new")
     public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody StudentDTOUI student){
         return studentService.createStudent(student);
     }
-//
-//    @PutMapping("edit/{studentId}")
-//    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long studentId, @RequestBody StudentDTOUI student){
-//        return studentService.updateStudent(studentId,student);
-//    }
-//
-//    @DeleteMapping("delete/{studentId}")
-//    public void deleteStudent(@PathVariable Long studentId){
-//        studentService.deleteStudent(studentId);
-//    };
+
+    @PutMapping("edit/{studentId}")
+    public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long studentId, @RequestBody StudentDTOUI student){
+        return studentService.updateStudent(studentId,student);
+    }
+
+    @DeleteMapping("delete/{studentId}")
+    public void deleteStudent(@PathVariable Long studentId){
+        studentService.deleteStudent(studentId);
+    };
 
 }
